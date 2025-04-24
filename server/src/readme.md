@@ -76,9 +76,9 @@ La documentación de la API está disponible en [http://localhost:5000/docs](htt
 
 ## Consideraciones
 - **Asincronismo**: Por defecto, FastAPI utiliza asincronismo para manejar las peticiones. Esto permite que la aplicación maneje múltiples peticiones simultáneamente sin bloquear el hilo principal. Se ha aprovechado esta característica para realizar las peticiones a las APIs externas de manera asincrónica, lo que mejora el rendimiento y la capacidad de respuesta de la aplicación.
-- **Manejo de errores**: A la hora de realizar peticiones a la API externa se ha implementado un manejo de errores que ignorara los productos que generen errores o sobrepasen el limite de tiempo establecido. Esto permite que la aplicación siga funcionando incluso si una de las APIs externas no responde o genera un error. Se ha implementado un timeout de 10 segundos para las peticiones a las APIs externas, lo que significa que si una API no responde en ese tiempo, se ignorará y se continuará con la siguiente.
+- **Manejo de errores**: A la hora de realizar peticiones a la API externa se ha implementado un manejo de errores que ignorara los productos que generen errores o sobrepasen el limite de tiempo establecido. Esto permite que la aplicación siga funcionando incluso si una de las APIs externas no responde o genera un error. Se ha implementado un timeout de 5 segundos para las peticiones a las APIs externas, lo que significa que si una API no responde en ese tiempo, se ignorará y se continuará con la siguiente.
 - **Comprobación de tipos**: Se ha utilizado `pydantic` para la validación de los datos de entrada y salida. Esto permite que la aplicación valide automáticamente los datos y genere documentación OpenAPI de manera sencilla. Además, se han definido modelos de datos para las respuestas de las APIs externas, lo que facilita la comprensión y el mantenimiento del código.
-
+- **Tiempo de espera**: Se ha configurado un tiempo de espera maximo para las peticiones a la API externa de 5 segundos. Esto provocara que los productos que tarden mas tiempo en responder sean ignorados y no se incluyan en la respuesta final. Dependiendo de lo que se quiera conseguir, se puede aumentar o disminuir este tiempo de espera.
 
 
 ## Aspectos a mejorar
