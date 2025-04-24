@@ -1,12 +1,11 @@
-import os
 import logging
 from typing import List, Optional
 
 import httpx
 from fastapi import HTTPException, status
+from settings import API_URL, TIMEOUT
 
 logger = logging.getLogger(__name__)
-API_URL = os.getenv("API_URL")
 
 
 async def request(url: str) -> Optional[dict]:
@@ -27,7 +26,7 @@ async def request(url: str) -> Optional[dict]:
     """
     async with httpx.AsyncClient() as client:
         try:
-            response = await client.get(url, timeout=10.0)
+            response = await client.get(url, timeout=TIMEOUT)
             response.raise_for_status()
             return response.json()
         except httpx.TimeoutException:
@@ -41,9 +40,7 @@ async def request(url: str) -> Optional[dict]:
         except httpx.HTTPStatusError:
             return None
         except Exception as e:
-            logger.exception(
-                f"Error inesperado al hacer la petición a {url}: {e}"
-            )
+            logger.exception(f"Error inesperado al hacer la petición a {url}: {e}")
             raise HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 detail=f"Error inesperado: {e}",

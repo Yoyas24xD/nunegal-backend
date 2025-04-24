@@ -1,24 +1,15 @@
 import asyncio
 import logging
-import os
 
-import dotenv
 from fastapi import FastAPI, HTTPException, status
 from models import SimilarProducts
+from settings import API_URL
 from utils import fetch_similar_product_ids, request
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger(__name__)
-
-dotenv.load_dotenv()
-API_URL = os.getenv("API_URL")
-
-if API_URL is None:
-    logger.critical("API_URL no está configurada en las variables de entorno.")
-    raise ValueError("API_URL no está configurada en las variables de entorno.")
-
 app = FastAPI()
 
 
